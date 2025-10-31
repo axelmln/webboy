@@ -1,16 +1,16 @@
 [package]
-name = "wasm_test"
+name = "webboy"
 version = "0.1.0"
 edition = "2021"
 authors = ["Axel Maulion"]
 description = ""
 license = "MIT"
-keywords = ["emulator", "gameboy", "rust", "engine", "core", "library"]
+keywords = ["emulator", "gameboy", "rust", "wasm", "web"]
 categories = ["emulators", "games"]
 readme = "README.md"
 
 [lib]
-name = "wasm_test"
+name = "webboy"
 path = "src/lib.rs"
 crate-type = ["cdylib", "rlib"]
 
