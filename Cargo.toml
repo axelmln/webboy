@@ -1,0 +1,22 @@
+[package]
+name = "wasm_test"
+version = "0.1.0"
+edition = "2021"
+authors = ["Axel Maulion"]
+description = ""
+license = "MIT"
+keywords = ["emulator", "gameboy", "rust", "engine", "core", "library"]
+categories = ["emulators", "games"]
+readme = "README.md"
+
+[lib]
+name = "wasm_test"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+gamuboy = { git = "https://github.com/axelmln/gamuboy-rs" }
+wasm-bindgen = "0.2"
+
+[profile.release]
+lto = "thin"

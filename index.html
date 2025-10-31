@@ -1,0 +1,313 @@
+<script src="webboy.js" type="module"></script>
+
+<div id="scale_div">
+    <button id="scale_up">+</button>
+    <button id="scale_down">-</button>
+
+    <div>
+        <button id="control_button">i</button>
+    </div>
+</div>
+
+<div id="mapping_modal">
+    <div id="mapping_modal_content">
+        <button id="close_modal">✕</button>
+        <h3>Joypad mappings</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Game Boy</th>
+                    <th>Keyboard</th>
+                    <th>Gamepad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                    <td>A</td>
+                    <td>Button A</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>Z</td>
+                    <td>Button B</td>
+                </tr>
+                <tr>
+                    <td>Start</td>
+                    <td>Enter</td>
+                    <td>Button Start</td>
+                </tr>
+                <tr>
+                    <td>Select</td>
+                    <td>S</td>
+                    <td>Button Select</td>
+                </tr>
+                <tr>
+                    <td>Up</td>
+                    <td>↑</td>
+                    <td>D-Pad / Joystick Up</td>
+                </tr>
+                <tr>
+                    <td>Down</td>
+                    <td>↓</td>
+                    <td>D-Pad / Joystick Down</td>
+                </tr>
+                <tr>
+                    <td>Left</td>
+                    <td>←</td>
+                    <td>D-Pad / Joystick Left</td>
+                </tr>
+                <tr>
+                    <td>Right</td>
+                    <td>→</td>
+                    <td>D-Pad / Joystick Right</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="webboy_div">
+    <p id="drop_here">
+        <span>D</span><span>R</span><span>O</span><span>P</span>
+        <span> </span>
+        <span>Y</span><span>O</span><span>U</span><span>R</span>
+        <span> </span>
+        <span>R</span><span>O</span><span>M</span>
+        <span> </span>
+        <span>H</span><span>E</span><span>R</span><span>E</span>
+    </p>
+    <canvas id="webboy"></canvas>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #e0e0e0;
+    }
+
+    #scale_div {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 6px;
+    }
+
+    #scale_div button {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 10px;
+        background-color: #f8f8f8;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        padding: 6px 10px;
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+        box-shadow: 0 2px 0 #ccc;
+    }
+
+    #scale_div button:hover {
+        background-color: #eee;
+        transform: translateY(-1px);
+    }
+
+    #scale_div button:active {
+        background-color: #ddd;
+        box-shadow: 0 1px 0 #aaa;
+        transform: translateY(1px);
+    }
+
+    #control_button {
+        background: #444;
+        color: black;
+        border: none;
+        border-radius: 50%;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    #mapping_modal {
+        position: absolute;
+        left: calc(50%-160);
+        background: #1e1e1e;
+        color: #eee;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        width: 320px;
+        padding: 10px 14px;
+        display: none;
+        z-index: 100;
+        border: 1px solid #333;
+    }
+
+    #mapping_modal.show {
+        display: block;
+    }
+
+    #mapping_modal_content {
+        position: relative;
+    }
+
+    #mapping_modal_content h3 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+        text-align: center;
+        color: #fff;
+        border-bottom: 1px solid #333;
+        padding-bottom: 4px;
+    }
+
+    #mapping_modal_content table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+
+    #mapping_modal_content th {
+        text-align: left;
+        padding: 4px 6px;
+        color: #bbb;
+        border-bottom: 1px solid #333;
+    }
+
+    #mapping_modal_content td {
+        padding: 4px 6px;
+        border-bottom: 1px solid #2b2b2b;
+        color: lightgray;
+    }
+
+    #mapping_modal_content tr:last-child td {
+        border-bottom: none;
+    }
+
+    #close_modal {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: none;
+        color: #aaa;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    #close_modal:hover {
+        color: #fff;
+    }
+
+    #webboy_div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 2px dashed lightgrey;
+        border-radius: 8px;
+        padding: 20px;
+        width: 320px;
+        height: 240px;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    #webboy_div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 2px dashed lightgrey;
+        border-radius: 8px;
+        padding: 20px;
+        width: calc(160px*3);
+        height: calc(144px*3);
+        background-color: white;
+    }
+
+    #drop_here {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 24px;
+        letter-spacing: 2px;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        margin-bottom: 10px;
+    }
+
+    #drop_here span:nth-child(1) {
+        color: #d22;
+    }
+
+    #drop_here span:nth-child(2) {
+        color: #e86f00;
+    }
+
+    #drop_here span:nth-child(3) {
+        color: #00aa44;
+    }
+
+    #drop_here span:nth-child(4) {
+        color: #2288dd;
+    }
+
+    #drop_here span:nth-child(5) {
+        color: #9933cc;
+    }
+
+    #drop_here span:nth-child(6) {
+        color: #d22;
+    }
+
+    #drop_here span:nth-child(7) {
+        color: #e86f00;
+    }
+
+    #drop_here span:nth-child(8) {
+        color: #00aa44;
+    }
+
+    #drop_here span:nth-child(9) {
+        color: #2288dd;
+    }
+
+    #drop_here span:nth-child(10) {
+        color: #9933cc;
+    }
+
+    #drop_here span:nth-child(11) {
+        color: #d22;
+    }
+
+    #drop_here span:nth-child(12) {
+        color: #e86f00;
+    }
+
+    #drop_here span:nth-child(13) {
+        color: #00aa44;
+    }
+
+    #drop_here span:nth-child(14) {
+        color: #2288dd;
+    }
+
+    #drop_here span:nth-child(15) {
+        color: #9933cc;
+    }
+
+    #drop_here span:nth-child(16) {
+        color: #d22;
+    }
+
+    #drop_here span:nth-child(17) {
+        color: #e86f00;
+    }
+
+    #drop_here span:nth-child(18) {
+        color: #00aa44;
+    }
+</style>
