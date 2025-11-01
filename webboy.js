@@ -1,4 +1,4 @@
-import init, { WebBoy, pixels_width, pixels_height, WebJoypadEvent, WebButton } from './pkg/wasm_test.js';
+import init, { WebBoy, pixels_width, pixels_height, WebJoypadEvent, WebButton } from './pkg/webboy.js';
 
 class JsLcd {
     /**
