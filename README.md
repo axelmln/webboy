@@ -3,7 +3,7 @@ A GameBoy emulator running in the browser
 
 It uses [gamuboy-rs](https://github.com/axelmln/gamuboy-rs) as the emulation core.
 
-## Usage
+## Demo
 
 https://webboy.pages.dev/
 
