@@ -18,6 +18,8 @@ class JsLcd {
 
         this.scale = 3;
         this.scaleCanvas();
+
+        this.lastFrameTime = Date.now();
     }
 
     scaleUp() {
@@ -44,6 +46,16 @@ class JsLcd {
         this.imageData.data.set(framebuffer);
         this.canvasCtx.putImageData(this.imageData, 0, 0);
         this.canvasCtx.drawImage(this.canvas, 0, 0, this.pixelsWidth, this.pixelsHeight, 0, 0, this.scaledWidth, this.scaledHeight);
+    }
+
+    computeFrameCapping() {
+        const frameDuration = 1000 / 60;
+        const sincePrevious = Date.now() - this.lastFrameTime;
+        return Math.max(frameDuration - sincePrevious, 0);
+    }
+
+    updateFrameTime() {
+        this.lastFrameTime = Date.now();
     }
 }
 
@@ -170,10 +182,12 @@ async function runWebboy(rom) {
     );
 
     function frame() {
+        lcd.updateFrameTime();
+
         handleGamepadState(joypadEvents);
 
         webBoy.step_frame();
-        requestAnimationFrame(frame);
+        setTimeout(() => requestAnimationFrame(frame), lcd.computeFrameCapping());
     }
 
     requestAnimationFrame(frame);
