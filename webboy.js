@@ -258,20 +258,30 @@ function handleGamepadState(joypadEvents) {
 
 function registerJoypadEventsProducer(joypadEvents) {
     document.addEventListener("keydown", function (evt) {
-        handleKeyEvent(joypadEvents, evt.key, true);
+        handleKeyboardEvent(joypadEvents, evt.key, true);
     });
     document.addEventListener("keyup", function (evt) {
-        handleKeyEvent(joypadEvents, evt.key, false);
+        handleKeyboardEvent(joypadEvents, evt.key, false);
     });
+
+    for (const buttonId of ["up", "down", "left", "right", "a", "b", "start", "select"]) {
+        const buttonElement = document.getElementById(buttonId);
+        buttonElement.addEventListener("mousedown", function () {
+            handlePageJoypadEvent(joypadEvents, buttonId, true);
+        });
+        buttonElement.addEventListener("mouseup", function () {
+            handlePageJoypadEvent(joypadEvents, buttonId, false);
+        });
+    }
 }
 
-function handleKeyEvent(joypadEvents, key, pressed) {
-    const button = mapButton(key);
+function handleKeyboardEvent(joypadEvents, key, pressed) {
+    const button = mapKeyboardToButton(key);
     if (button === undefined) return;
     joypadEvents.push(new WebJoypadEvent(button, pressed));
 }
 
-function mapButton(key) {
+function mapKeyboardToButton(key) {
     return {
         "a": WebButton.A,
         "z": WebButton.B,
@@ -282,6 +292,25 @@ function mapButton(key) {
         "ArrowLeft": WebButton.Left,
         "ArrowRight": WebButton.Right,
     }[key];
+}
+
+function handlePageJoypadEvent(joypadEvents, id, pressed) {
+    const button = mapPageJoypadIdToButton(id);
+    if (button === undefined) return;
+    joypadEvents.push(new WebJoypadEvent(button, pressed));
+}
+
+function mapPageJoypadIdToButton(id) {
+    return {
+        "a": WebButton.A,
+        "b": WebButton.B,
+        "start": WebButton.Start,
+        "select": WebButton.Select,
+        "up": WebButton.Up,
+        "down": WebButton.Down,
+        "left": WebButton.Left,
+        "right": WebButton.Right,
+    }[id];
 }
 
 const dropZone = document.getElementById("webboy_div");
