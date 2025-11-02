@@ -257,19 +257,25 @@ function handleGamepadState(joypadEvents) {
 }
 
 function registerJoypadEventsProducer(joypadEvents) {
-    document.addEventListener("keydown", function (evt) {
+    document.addEventListener("keydown", (evt) => {
         handleKeyboardEvent(joypadEvents, evt.key, true);
     });
-    document.addEventListener("keyup", function (evt) {
+    document.addEventListener("keyup", (evt) => {
         handleKeyboardEvent(joypadEvents, evt.key, false);
     });
 
     for (const buttonId of ["up", "down", "left", "right", "a", "b", "start", "select"]) {
         const buttonElement = document.getElementById(buttonId);
-        buttonElement.addEventListener("mousedown", function () {
+        buttonElement.addEventListener("touchstart", (evt) => {
+            evt.preventDefault();
             handlePageJoypadEvent(joypadEvents, buttonId, true);
         });
-        buttonElement.addEventListener("mouseup", function () {
+        buttonElement.addEventListener("touchend", (evt) => {
+            evt.preventDefault();
+            handlePageJoypadEvent(joypadEvents, buttonId, false);
+        });
+        buttonElement.addEventListener("touchcancel", (evt) => {
+            evt.preventDefault();
             handlePageJoypadEvent(joypadEvents, buttonId, false);
         });
     }
