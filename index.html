@@ -12,12 +12,18 @@
     </svg>
 </a>
 
-<div id="scale_div">
-    <button id="scale_up">+</button>
-    <button id="scale_down">-</button>
+<div style="
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 6px;
+">
+    <button id="scale_up" class="page-button">+</button>
+    <button id="scale_down" class="page-button">-</button>
 
-    <div>
-        <button id="control_button">i</button>
+    <div style="padding-left: 20px;">
+        <button id="show_mapping_button" class="page-button">i</button>
     </div>
 </div>
 
@@ -132,17 +138,9 @@
         z-index: 1000;
     }
 
-    #scale_div {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        display: flex;
-        gap: 6px;
-    }
-
-    #scale_div button {
+    .page-button {
         font-family: 'Press Start 2P', monospace;
-        font-size: 10px;
+        font-size: 36px;
         background-color: #f8f8f8;
         border: 2px solid #ccc;
         border-radius: 6px;
@@ -152,25 +150,15 @@
         box-shadow: 0 2px 0 #ccc;
     }
 
-    #scale_div button:hover {
+    .page-button:hover {
         background-color: #eee;
         transform: translateY(-1px);
     }
 
-    #scale_div button:active {
+    .page-button:active {
         background-color: #ddd;
         box-shadow: 0 1px 0 #aaa;
         transform: translateY(1px);
-    }
-
-    #control_button {
-        background: #444;
-        color: black;
-        border: none;
-        border-radius: 50%;
-        padding: 4px 8px;
-        cursor: pointer;
-        font-size: 16px;
     }
 
     #mapping_modal {

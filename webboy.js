@@ -400,7 +400,7 @@ function romReceivedCleanUp() {
     dropZone.removeEventListener("drop", romDropHandler);
 }
 
-const controlButton = document.getElementById("control_button");
+const controlButton = document.getElementById("show_mapping_button");
 const modal = document.getElementById("mapping_modal");
 const closeModal = document.getElementById("close_modal");
 
