@@ -168,7 +168,8 @@ async function runWebboy(rom) {
     registerLcdScaler(lcd);
 
     const joypadEvents = [];
-    registerJoypadEventsProducer(joypadEvents);
+    registerKeyboardJoypadEventsProducer(joypadEvents);
+    registerPageJoypadEventsProducer(joypadEvents);
 
     const webBoy = new WebBoy(
         rom,
@@ -256,29 +257,13 @@ function handleGamepadState(joypadEvents) {
     );
 }
 
-function registerJoypadEventsProducer(joypadEvents) {
+function registerKeyboardJoypadEventsProducer(joypadEvents) {
     document.addEventListener("keydown", (evt) => {
         handleKeyboardEvent(joypadEvents, evt.key, true);
     });
     document.addEventListener("keyup", (evt) => {
         handleKeyboardEvent(joypadEvents, evt.key, false);
     });
-
-    for (const buttonId of ["up", "down", "left", "right", "a", "b", "start", "select"]) {
-        const buttonElement = document.getElementById(buttonId);
-        buttonElement.addEventListener("touchstart", (evt) => {
-            evt.preventDefault();
-            handlePageJoypadEvent(joypadEvents, buttonId, true);
-        });
-        buttonElement.addEventListener("touchend", (evt) => {
-            evt.preventDefault();
-            handlePageJoypadEvent(joypadEvents, buttonId, false);
-        });
-        buttonElement.addEventListener("touchcancel", (evt) => {
-            evt.preventDefault();
-            handlePageJoypadEvent(joypadEvents, buttonId, false);
-        });
-    }
 }
 
 function handleKeyboardEvent(joypadEvents, key, pressed) {
@@ -298,6 +283,34 @@ function mapKeyboardToButton(key) {
         "ArrowLeft": WebButton.Left,
         "ArrowRight": WebButton.Right,
     }[key];
+}
+
+function registerPageJoypadEventsProducer(joypadEvents) {
+    for (const buttonId of ["up", "down", "left", "right", "a", "b", "start", "select"]) {
+        const buttonElement = document.getElementById(buttonId);
+
+        buttonElement.addEventListener("touchstart", (evt) => {
+            evt.preventDefault();
+            handlePageJoypadEvent(joypadEvents, buttonId, true);
+        });
+        buttonElement.addEventListener("touchend", (evt) => {
+            evt.preventDefault();
+            handlePageJoypadEvent(joypadEvents, buttonId, false);
+        });
+        buttonElement.addEventListener("touchcancel", (evt) => {
+            evt.preventDefault();
+            handlePageJoypadEvent(joypadEvents, buttonId, false);
+        });
+
+        buttonElement.addEventListener("mousedown", (evt) => {
+            evt.preventDefault();
+            handlePageJoypadEvent(joypadEvents, buttonId, true);
+        });
+        buttonElement.addEventListener("mouseup", (evt) => {
+            evt.preventDefault();
+            handlePageJoypadEvent(joypadEvents, buttonId, false);
+        });
+    }
 }
 
 function handlePageJoypadEvent(joypadEvents, id, pressed) {
