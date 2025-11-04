@@ -14,7 +14,7 @@ class JsLcd {
         this.imageData = this.canvasCtx.createImageData(this.pixelsWidth, this.pixelsWidth);
 
         this.minScale = 1;
-        this.maxScale = 7;
+        this.maxScale = 6;
 
         this.scale = 3;
         this.scaleCanvas();
