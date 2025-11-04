@@ -415,3 +415,12 @@ closeModal.addEventListener("click", () => {
 modal.addEventListener("click", (e) => {
     if (e.target === modal) modal.classList.remove("show");
 });
+
+let isJoypadHidden = false;
+const hideJoypadButton = document.getElementById("hide_joypad_button");
+hideJoypadButton.addEventListener("click", () => {
+    isJoypadHidden = !isJoypadHidden;
+    const joypadDiv = document.getElementById("joypad");
+    joypadDiv.style.display = isJoypadHidden ? "none" : "contents";
+    hideJoypadButton.style.textDecoration = isJoypadHidden ? "line-through" : "none";
+});
