@@ -332,26 +332,21 @@ function mapPageJoypadIdToButton(id) {
     }[id];
 }
 
+const romInput = document.getElementById("rom_input");
+romInput.addEventListener("change", romPickerHandler);
+
 const dropZone = document.getElementById("webboy_div");
 
 async function romPickerHandler() {
-    /**
-     * @type {FileSystemFileHandle[]}
-     */
-    const filesHandles = await showOpenFilePicker();
-    if (filesHandles.length !== 1) return;
-
     romReceivedCleanUp();
 
-    const filesHandle = filesHandles[0];
-
-    const file = await filesHandle.getFile();
+    const file = romInput.files[0];
 
     const rom = new Uint8Array(await file.arrayBuffer());
     runWebboy(rom);
 };
 
-dropZone.addEventListener('click', romPickerHandler);
+dropZone.addEventListener('click', () => romInput.click());
 
 function preventDefaults(evt) {
     evt.preventDefault();
