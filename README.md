@@ -14,7 +14,7 @@ https://webboy.pages.dev/
 | A               | `A`             | `A`                              |
 | B               | `Z`             | `B`                              |
 | Start           | `Enter`         | `Start`                          |
-| Select          | `Tab`           | `Seletc`                         |
+| Select          | `S`             | `Select`                         |
 | D-Pad Up        | `Arrow Up`      | `D-Pad Up / Left stick Up`       |
 | D-Pad Down      | `Arrow Down`    | `D-Pad Down / Left stick Down`   |
 | D-Pad Left      | `Arrow Left`    | `D-Pad Left / Left stick Left`   |
